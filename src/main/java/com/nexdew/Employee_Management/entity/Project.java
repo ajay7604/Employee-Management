@@ -1,14 +1,14 @@
 package com.nexdew.Employee_Management.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
@@ -23,5 +23,14 @@ public class Project {
 
     private String name;
     private String description;
+
+
+    @ManyToMany(mappedBy = "projects")
+    private List<Employee> employees = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn( name = "department_id")
+    private Department department;
+
 
 }

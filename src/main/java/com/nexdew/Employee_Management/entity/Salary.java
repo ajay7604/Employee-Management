@@ -1,10 +1,7 @@
 package com.nexdew.Employee_Management.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,5 +21,10 @@ public class Salary {
     private Double basicSalary;
     private Double hra;
     private Double allowances;
+
+    @OneToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
 
 }

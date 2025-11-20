@@ -1,7 +1,6 @@
 package com.nexdew.Employee_Management.controller;
 
 import com.nexdew.Employee_Management.entity.Address;
-import com.nexdew.Employee_Management.entity.Employee;
 import com.nexdew.Employee_Management.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,12 +34,12 @@ public class AddressController {
         return ResponseEntity.ok(addressService.getAllAddress());
     }
 
-    @DeleteMapping("/{AddressId}")
+    @DeleteMapping("/{addressId}")
     public ResponseEntity<Boolean> deleteAddressById(@PathVariable Long addressId){
         return new ResponseEntity<>(addressService.deleteAddressById(addressId), HttpStatus.OK);
     }
 
-    @PutMapping("/{empId}")
+    @PutMapping("/{addressId}")
     public ResponseEntity<Address> updateAddress(@PathVariable  Long addressId, @RequestBody Address updatedAddress) {
         return ResponseEntity.ok(addressService.updateAddress(addressId,updatedAddress));
     }

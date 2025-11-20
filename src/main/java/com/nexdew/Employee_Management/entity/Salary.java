@@ -1,6 +1,7 @@
 package com.nexdew.Employee_Management.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class Salary {
     private Double allowances;
 
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "employee_id")
     private Employee employee;
 

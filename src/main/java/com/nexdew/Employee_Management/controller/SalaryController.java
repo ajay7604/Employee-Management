@@ -16,7 +16,7 @@ public class SalaryController {
     @Autowired
     private SalaryService salaryService;
 
-    @PostMapping("/{empId}salary")
+    @PostMapping("/{empId}/salary")
     public ResponseEntity<Salary> createSalary(@PathVariable Long empId , @RequestBody Salary salary){
      Salary assignedsalary = salaryService.createSalaryOfEmployee( empId , salary);
      return new ResponseEntity<>(assignedsalary, HttpStatus.CREATED);

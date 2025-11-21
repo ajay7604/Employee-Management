@@ -40,9 +40,7 @@ import java.util.List;
     )
     private List<Project> projects = new ArrayList<>();
 
-
     @OneToOne(mappedBy = "employee")
-        private Salary salary;
-
+    private Salary salary;
 
     }

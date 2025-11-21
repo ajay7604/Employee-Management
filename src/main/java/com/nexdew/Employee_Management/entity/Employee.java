@@ -1,6 +1,9 @@
 package com.nexdew.Employee_Management.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,10 +30,14 @@ import java.util.List;
 
         @ManyToOne
         @JoinColumn(name = "deptId")
+        @JsonIgnore
         private Department department;
 
-        @OneToOne(mappedBy = "employee")
-        private Address address;
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Address address;
+
+
 
     @ManyToMany
     @JoinTable(
@@ -38,9 +45,12 @@ import java.util.List;
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "project_id")
     )
+    @JsonIgnore
     private List<Project> projects = new ArrayList<>();
 
-    @OneToOne(mappedBy = "employee")
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Salary salary;
 
-    }
+
+}

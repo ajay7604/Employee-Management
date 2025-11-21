@@ -1,15 +1,13 @@
 package com.nexdew.Employee_Management.service.Impl;
 
-import com.nexdew.Employee_Management.entity.Address;
-import com.nexdew.Employee_Management.entity.Department;
-import com.nexdew.Employee_Management.entity.Employee;
-import com.nexdew.Employee_Management.entity.Salary;
+import com.nexdew.Employee_Management.entity.*;
 import com.nexdew.Employee_Management.repository.*;
 import com.nexdew.Employee_Management.service.DepartmentService;
 import com.nexdew.Employee_Management.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,13 +54,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         // ---------- Update Department ----------
         if (updatedEmployee.getDepartment() != null) {
+
             Long deptId = updatedEmployee.getDepartment().getDeptId();
 
-            Department dept = departmentRepository.findById(deptId)
-                    .orElseThrow(() -> new IllegalArgumentException("Department not found"));
+            Department department = departmentRepository.findById(deptId)
+                    .orElseThrow(() -> new RuntimeException("Department not found"));
 
-            existingEmployee.setDepartment(dept);
+            existingEmployee.setDepartment(department);
         }
+
 
         // ---------- Update Address ----------
         if (updatedEmployee.getAddress() != null) {
@@ -70,15 +70,18 @@ public class EmployeeServiceImpl implements EmployeeService {
             Address existingAddress = existingEmployee.getAddress();
 
             if (existingAddress == null) {
-                existingAddress = new Address(); // only when first time
+                existingAddress = new Address();
             }
 
             existingAddress.setStreet(updatedEmployee.getAddress().getStreet());
+            existingAddress.setState(updatedEmployee.getAddress().getState());
             existingAddress.setCity(updatedEmployee.getAddress().getCity());
             existingAddress.setEmployee(existingEmployee);
 
             existingEmployee.setAddress(existingAddress);
         }
+
+
 
         // ---------- Update Salary ----------
         if (updatedEmployee.getSalary() != null) {
@@ -86,7 +89,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             Salary existingSalary = existingEmployee.getSalary();
 
             if (existingSalary == null) {
-                existingSalary = new Salary(); // only when first time
+                existingSalary = new Salary();
             }
 
             existingSalary.setBasicSalary(updatedEmployee.getSalary().getBasicSalary());
@@ -97,11 +100,19 @@ public class EmployeeServiceImpl implements EmployeeService {
             existingEmployee.setSalary(existingSalary);
         }
 
-        // ---------- Update Projects ----------
-        if (updatedEmployee.getProjects() != null) {
-            existingEmployee.setProjects(updatedEmployee.getProjects());
-        }
 
+        if (updatedEmployee.getProjects() != null) {
+
+            List<Project> newProjects = new ArrayList<>();
+
+            for (Project p : updatedEmployee.getProjects()) {
+                Project project = projectRepository.findById(p.getProjectId())
+                        .orElseThrow(() -> new RuntimeException("Project not found"));
+                newProjects.add(project);
+            }
+
+            existingEmployee.setProjects(newProjects);
+        }
         return employeeRepository.save(existingEmployee);
     }
 

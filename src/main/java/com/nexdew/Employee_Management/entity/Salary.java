@@ -1,6 +1,7 @@
 package com.nexdew.Employee_Management.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ public class Salary {
     @JsonIgnore
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
 
 
 }

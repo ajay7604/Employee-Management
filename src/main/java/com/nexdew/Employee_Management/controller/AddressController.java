@@ -45,6 +45,7 @@ public class AddressController {
         return ResponseEntity.ok(addressService.updateAddress(addressId,updatedAddress));
     }
 
+    @PatchMapping("{addressId}")
     public ResponseEntity<Address> partialUpdate(@PathVariable Long addressId, @RequestBody Map<String, Object> updatedListAddress){
         return ResponseEntity.ok(addressService.getPartialUpdates(addressId,updatedListAddress));
     }

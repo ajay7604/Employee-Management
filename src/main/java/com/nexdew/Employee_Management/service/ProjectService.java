@@ -4,6 +4,7 @@ import com.nexdew.Employee_Management.entity.Address;
 import com.nexdew.Employee_Management.entity.Project;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProjectService {
     Project createProject(Project project);
@@ -15,4 +16,6 @@ public interface ProjectService {
     Boolean deleteProjectById(Long projectId);
 
     Project updateproject(Long projectId, Project updatedProject);
+
+    Project getPartialUpdate(Long projectId, Map<String, Object> updatedList);
 }

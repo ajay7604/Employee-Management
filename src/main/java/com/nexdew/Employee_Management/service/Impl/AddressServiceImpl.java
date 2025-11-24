@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -51,6 +52,21 @@ public class AddressServiceImpl implements AddressService {
         existingAdd.setStreet(updatedAddress.getStreet());
 
         return addressRepository.save(existingAdd);
+    }
+
+    @Override
+    public Address getPartialUpdates(Long addressId, Map<String, Object> updatedListAddress) {
+        Address existingAddress = addressRepository.findById(addressId)
+                .orElseThrow(() -> new IllegalArgumentException("address not found:" + addressId));
+        updatedListAddress.forEach((field,value)->{
+            switch (field){
+                case "street":existingAddress.setStreet(value.toString());break;
+                case "city": existingAddress.setCity(value.toString());break;
+                case "state":existingAddress.setState(value.toString());break;
+                default: throw new IllegalArgumentException("field not found ");
+            }
+        });
+        return addressRepository.save(existingAddress);
     }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -52,5 +53,21 @@ private ProjectRepository projectRepository;
         Existingproject.setDescription(updatedProject.getDescription());
 
         return projectRepository.save(Existingproject);
+    }
+
+    @Override
+    public Project getPartialUpdate(Long projectId, Map<String, Object> updatedList) {
+        Project existedProject = projectRepository.findById(projectId)
+                .orElseThrow(() -> new RuntimeException("project ID not found:" + projectId));
+
+        updatedList.forEach((field ,value)->{
+            switch (field){
+                case "name":existedProject.setName(value.toString());break;
+                case "description":existedProject.setDescription(value.toString());break;
+                default: throw new IllegalArgumentException("Field is not Present");
+            }
+        });
+        return projectRepository.save(existedProject);
+
     }
 }

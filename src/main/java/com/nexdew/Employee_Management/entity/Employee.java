@@ -1,9 +1,7 @@
 package com.nexdew.Employee_Management.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,8 +34,6 @@ import java.util.List;
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Address address;
-
-
 
     @ManyToMany
     @JoinTable(

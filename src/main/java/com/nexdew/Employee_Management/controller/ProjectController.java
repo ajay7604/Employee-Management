@@ -1,6 +1,7 @@
 package com.nexdew.Employee_Management.controller;
 
 
+import com.nexdew.Employee_Management.entity.Employee;
 import com.nexdew.Employee_Management.entity.Project;
 import com.nexdew.Employee_Management.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/project")
@@ -43,6 +45,12 @@ public class ProjectController {
     public ResponseEntity<Project> updateProject(@PathVariable  Long projectId, @RequestBody Project updatedProject) {
         return ResponseEntity.ok(projectService.updateproject(projectId,updatedProject));
     }
+
+    @PatchMapping("/{projectId}")
+    public ResponseEntity<Project> updatePartialProject(@PathVariable Long projectId, @RequestBody Map<String,Object> updatedList){
+        return new ResponseEntity<>(projectService.getPartialUpdate(projectId,updatedList),HttpStatus.CREATED);
+    }
+
 }
 
 

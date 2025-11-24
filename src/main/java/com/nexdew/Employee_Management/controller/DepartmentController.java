@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/Department")
@@ -42,6 +43,10 @@ public class DepartmentController {
     @GetMapping("/all")
     public ResponseEntity<List<Department>> getallDepartment(){
         return ResponseEntity.ok(departmentService.getallDepartment());
+    }
+    @PatchMapping("/{deptId}")
+    public ResponseEntity<Department> PartialUpdates(@PathVariable Long deptId, @RequestBody Map<String ,Object> updatedListDepartment){
+        return new  ResponseEntity<>(departmentService.getPartialUpdatesOfDepartment(deptId,updatedListDepartment),HttpStatus.CREATED);
     }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -43,4 +44,10 @@ public class AddressController {
     public ResponseEntity<Address> updateAddress(@PathVariable  Long addressId, @RequestBody Address updatedAddress) {
         return ResponseEntity.ok(addressService.updateAddress(addressId,updatedAddress));
     }
+
+    public ResponseEntity<Address> partialUpdate(@PathVariable Long addressId, @RequestBody Map<String, Object> updatedListAddress){
+        return ResponseEntity.ok(addressService.getPartialUpdates(addressId,updatedListAddress));
+    }
+
+
 }

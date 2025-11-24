@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DepartmentServiceImpl  implements DepartmentService {
@@ -47,5 +48,18 @@ public class DepartmentServiceImpl  implements DepartmentService {
     @Override
     public List<Department> getallDepartment() {
         return departmentRepository.findAll();
+    }
+
+    @Override
+    public Department getPartialUpdatesOfDepartment(Long deptId, Map<String, Object> updatedListDepartment) {
+        Department existingDepartment = departmentRepository.findById(deptId)
+                .orElseThrow(() -> new IllegalArgumentException("Department not found " + deptId));
+        updatedListDepartment.forEach((field, value) ->{
+            switch (field){
+                case "name":existingDepartment.setName(value.toString());break;
+                default: throw new IllegalArgumentException("field not found");
+            }
+        } );
+        return departmentRepository.save(existingDepartment);
     }
 }

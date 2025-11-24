@@ -129,8 +129,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee updatePartialEmployee(Long empId, Map<String, Object> updatedList) {
-        Employee existedEmployee = employeeRepository
-                .findById(empId).orElseThrow(() -> new IllegalArgumentException("Employee Not Found"));
+//        Employee existedEmployee = employeeRepository
+//                .findById(empId).orElseThrow(() -> new IllegalArgumentException("Employee Not Found"));
 //        for(Map.Entry<String,Object> entry:updatedList.entrySet()){
 //            String filed=entry.getKey();
 //            Object value=entry.getValue();
@@ -143,15 +143,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 //                    throw new IllegalArgumentException("Field is not Present");
 //            }
 //        }
+
+        Employee existedEmployee = employeeRepository
+                .findById(empId).orElseThrow(() -> new IllegalArgumentException("Employee Not Found"));
         updatedList.forEach((field,value)->{
             switch (field) {
-                case "name": existedEmployee.setName((String)value); break;
-                case "email": existedEmployee.setEmail((String)value); break;
-                case "phoneNumber": existedEmployee.setPhoneNumber((Long) value); break;
+                case "name": existedEmployee.setName(value.toString()); break;
+                case "email": existedEmployee.setEmail(value.toString()); break;
+                case "phoneNumber": existedEmployee.setPhoneNumber(Long.valueOf(value.toString())); break;
                 default: throw new IllegalArgumentException("Field is not Present");
             }
         });
         return employeeRepository.save(existedEmployee);
-
     }
 }

@@ -2,7 +2,6 @@ package com.nexdew.Employee_Management.controller;
 
 
 import com.nexdew.Employee_Management.entity.Department;
-import com.nexdew.Employee_Management.entity.Employee;
 import com.nexdew.Employee_Management.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

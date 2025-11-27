@@ -17,18 +17,53 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     private final EmployeeRepository employeeRepository;
-
     private final DepartmentRepository departmentRepository;
-    private final SalaryRepository salaryRepository;
     private final ProjectRepository projectRepository;
-    private final AddressRepository addressRepository;
 
 
     @Override
     public Employee createEmployee(Employee employee) {
-      return  employeeRepository.save(employee);
 
+        // 1. Set Department
+        if (employee.getDepartment() != null) {
+            Long deptId = employee.getDepartment().getDeptId();
+            Department department = departmentRepository.findById(deptId)
+                    .orElseThrow(() -> new RuntimeException("Department not found"));
+            employee.setDepartment(department);
+        }
+
+        // 2. Set Address
+        if (employee.getAddress() != null) {
+            Address address = employee.getAddress();
+            address.setEmployee(employee);
+            employee.setAddress(address);
+        }
+
+        // 3. Set Salary
+        if (employee.getSalary() != null) {
+            Salary salary = employee.getSalary();
+            salary.setEmployee(employee);
+            employee.setSalary(salary);
+        }
+
+        // 4. Set Projects (Many-to-Many)
+        if (employee.getProjects() != null) {
+            List<Project> projectList = new ArrayList<>();
+
+            for (Project p : employee.getProjects()) {
+                Project existingProject = projectRepository.findById(p.getProjectId())
+                        .orElseThrow(() -> new RuntimeException("Project not found: " + p.getProjectId()));
+                projectList.add(existingProject);
+            }
+
+            employee.setProjects(projectList);
+        }
+
+        // SAVE
+        return employeeRepository.save(employee);
     }
+
+
 
     @Override
     public Employee getById(Long empId) {
@@ -81,8 +116,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             existingEmployee.setAddress(existingAddress);
         }
 
-
-
         // ---------- Update Salary ----------
         if (updatedEmployee.getSalary() != null) {
 
@@ -126,10 +159,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 
-
     @Override
     public Employee updatePartialEmployee(Long empId, Map<String, Object> updatedList) {
-//        Employee existedEmployee = employeeRepository
+
+        Employee existedEmployee = employeeRepository
+                .findById(empId).orElseThrow(() -> new IllegalArgumentException("Employee Not Found"));
+
+        updatedList.forEach((field,value)->{
+            switch (field) {
+                case "name": existedEmployee.setName(value.toString()); break;
+                case "email": existedEmployee.setEmail(value.toString()); break;
+                case "phoneNumber": existedEmployee.setPhoneNumber(Long.valueOf(value.toString())); break;
+                default: throw new IllegalArgumentException("Field is not Present");
+            }
+        });
+        return employeeRepository.save(existedEmployee);
+    }
+
+    //        Employee existedEmployee = employeeRepository
 //                .findById(empId).orElseThrow(() -> new IllegalArgumentException("Employee Not Found"));
 //        for(Map.Entry<String,Object> entry:updatedList.entrySet()){
 //            String filed=entry.getKey();
@@ -144,16 +191,4 @@ public class EmployeeServiceImpl implements EmployeeService {
 //            }
 //        }
 
-        Employee existedEmployee = employeeRepository
-                .findById(empId).orElseThrow(() -> new IllegalArgumentException("Employee Not Found"));
-        updatedList.forEach((field,value)->{
-            switch (field) {
-                case "name": existedEmployee.setName(value.toString()); break;
-                case "email": existedEmployee.setEmail(value.toString()); break;
-                case "phoneNumber": existedEmployee.setPhoneNumber(Long.valueOf(value.toString())); break;
-                default: throw new IllegalArgumentException("Field is not Present");
-            }
-        });
-        return employeeRepository.save(existedEmployee);
-    }
 }

@@ -20,10 +20,10 @@ public class ProjectController {
 
     @PostMapping("/create-project")
     public ResponseEntity<Project> createProject(@RequestBody Project project ){
-        Project projects =  projectService.createProject(project);
-        return new ResponseEntity<>(projects, HttpStatus.CREATED);
-
+        Project savedProject = projectService.createProject(project);
+        return new ResponseEntity<>(savedProject, HttpStatus.CREATED);
     }
+
 
     @GetMapping("/{projectId}")
     public ResponseEntity<Project> getByProjectById(@PathVariable Long projectId){
@@ -49,6 +49,7 @@ public class ProjectController {
         return new ResponseEntity<>(projectService.getPartialUpdate(projectId,updatedList),HttpStatus.CREATED);
     }
 
-}
+   }
+
 
 

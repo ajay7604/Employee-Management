@@ -37,7 +37,7 @@ public class AddressController {
 
     @DeleteMapping("/{addressId}")
     public ResponseEntity<Boolean> deleteAddressById(@PathVariable Long addressId){
-        return new ResponseEntity<>(addressService.deleteAddressById(addressId), HttpStatus.OK);
+        return ResponseEntity. ok(addressService.deleteAddressById(addressId));
     }
 
     @PutMapping("/{addressId}")
@@ -45,10 +45,9 @@ public class AddressController {
         return ResponseEntity.ok(addressService.updateAddress(addressId,updatedAddress));
     }
 
-    @PatchMapping("{addressId}")
+    @PatchMapping("/{addressId}")
     public ResponseEntity<Address> partialUpdate(@PathVariable Long addressId, @RequestBody Map<String, Object> updatedListAddress){
         return ResponseEntity.ok(addressService.getPartialUpdates(addressId,updatedListAddress));
     }
-
 
 }

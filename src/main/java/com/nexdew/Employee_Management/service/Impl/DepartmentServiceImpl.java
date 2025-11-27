@@ -2,22 +2,28 @@ package com.nexdew.Employee_Management.service.Impl;
 
 import com.nexdew.Employee_Management.entity.Department;
 import com.nexdew.Employee_Management.repository.DepartmentRepository;
+import com.nexdew.Employee_Management.repository.ProjectRepository;
 import com.nexdew.Employee_Management.service.DepartmentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class DepartmentServiceImpl  implements DepartmentService {
 
-    @Autowired
-    private DepartmentRepository departmentRepository;
+
+    private final DepartmentRepository departmentRepository;
+
+    private final ProjectRepository projectRepository;
 
     @Override
     public Department createDepartment(Department department) {
+
         return departmentRepository.save(department) ;
+
     }
 
     @Override
@@ -40,7 +46,6 @@ public class DepartmentServiceImpl  implements DepartmentService {
         Department existingDept = departmentRepository.findById(deptID)
                 .orElseThrow(() -> new RuntimeException("department not found by this id"));
          existingDept.setName(updatedDepartment.getName());
-         existingDept.setDeptId(updatedDepartment.getDeptId());
 
          return departmentRepository.save(existingDept);
     }

@@ -79,4 +79,5 @@ public class SalaryServiceImpl implements SalaryService {
     public List<Salary> getAllSalaries() {
         return salaryRepository.findAll();
     }
+
 }

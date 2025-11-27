@@ -33,7 +33,7 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentService.deleteById(deptID));
     }
 
-    @PutMapping("{deptID}")
+    @PutMapping("/{deptID}")
     public ResponseEntity<Department> updateDepartment(@PathVariable Long deptID , @RequestBody Department updatedDepartment){
         return  ResponseEntity.ok(departmentService.updatedDepartment(deptID,updatedDepartment));
     }
@@ -45,7 +45,7 @@ public class DepartmentController {
     }
     @PatchMapping("/{deptId}")
     public ResponseEntity<Department> PartialUpdates(@PathVariable Long deptId, @RequestBody Map<String ,Object> updatedListDepartment){
-        return new  ResponseEntity<>(departmentService.getPartialUpdatesOfDepartment(deptId,updatedListDepartment),HttpStatus.CREATED);
+        return ResponseEntity.ok(departmentService.getPartialUpdatesOfDepartment(deptId,updatedListDepartment));
     }
 
 }

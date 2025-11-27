@@ -26,7 +26,7 @@ public class Address {
 
     @OneToOne
     @JoinColumn(name = "employee_id")
-    @JsonIgnore
+    @JsonBackReference
     private Employee employee;
 
 

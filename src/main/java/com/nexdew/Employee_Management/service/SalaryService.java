@@ -1,8 +1,10 @@
 package com.nexdew.Employee_Management.service;
 
 import com.nexdew.Employee_Management.entity.Salary;
+import org.springframework.http.HttpStatusCode;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SalaryService {
 
@@ -16,4 +18,6 @@ public interface SalaryService {
     Boolean deleteSalary(Long empId);
 
     List<Salary> getAllSalaries();
+
+
 }

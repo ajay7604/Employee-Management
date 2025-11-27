@@ -15,8 +15,6 @@ public interface EmployeeService {
 
     Employee updatePartialEmployee(Long empId, Map<String, Object> updatedList);
 
-
-
     List<Employee> getAllEmployees();
 
     Boolean deleteEmployeeById(Long empId);

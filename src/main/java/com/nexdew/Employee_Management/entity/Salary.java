@@ -24,11 +24,14 @@ public class Salary {
     private Double hra;
     private Double allowances;
 
-    @OneToOne
-    @JsonIgnore
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+//    @OneToOne(mappedBy = "salary")
+//    @JsonBackReference
+//    private Employee employee;
 
+    @OneToOne
+    @JoinColumn(name = "employee_id")  // FK goes here
+    @JsonBackReference
+    private Employee employee;
 
 
 }

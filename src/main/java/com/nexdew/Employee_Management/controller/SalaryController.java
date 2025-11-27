@@ -43,7 +43,5 @@ public class SalaryController {
         return ResponseEntity.ok(salaryService.getAllSalaries());
     }
 
+    }
 
-
-
-}

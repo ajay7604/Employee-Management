@@ -1,6 +1,7 @@
 package com.nexdew.Employee_Management.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,10 +27,11 @@ public class Project {
 
 
     @ManyToMany(mappedBy = "projects")
+    @JsonIgnore
     private List<Employee> employees = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn( name = "department_id")
+    @JoinColumn(name = "deptId")
     private Department department;
 
 

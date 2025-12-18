@@ -1,5 +1,6 @@
 package com.nexdew.Employee_Management.controller;
 
+import com.nexdew.Employee_Management.dto.AddressRequestDTO;
 import com.nexdew.Employee_Management.entity.Address;
 import com.nexdew.Employee_Management.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,17 @@ public class AddressController {
     private AddressService addressService;
 
 
-    @PostMapping("/create-address")
-    public ResponseEntity<Address> createAddress(@RequestBody Address address ){
-      Address addresses =  addressService.createAddress(address);
-        return new ResponseEntity<>(addresses, HttpStatus.CREATED);
-
-    }
+//    @PostMapping("/{employeeId}/create-address")
+//    public ResponseEntity<Address> createAddress(@PathVariable Long employeeId, @RequestBody Address address ){
+//      Address addresses =  addressService.createAddress(employeeId,address);
+//        return new ResponseEntity<>(addresses, HttpStatus.CREATED);
+//
+//    }
+     @PostMapping("/create")
+     public ResponseEntity<Address> createAddress(@RequestBody AddressRequestDTO addressRequestDTO) {
+     Address savedAddress = addressService.createAddress(addressRequestDTO);
+     return new ResponseEntity<>(savedAddress, HttpStatus.CREATED);
+}
 
     @GetMapping("/{addressId}")
     public ResponseEntity<Address> getByAddressById(@PathVariable Long addressId){

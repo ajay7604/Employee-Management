@@ -2,7 +2,6 @@ package com.nexdew.Employee_Management.service.Impl;
 
 import com.nexdew.Employee_Management.entity.*;
 import com.nexdew.Employee_Management.repository.*;
-import com.nexdew.Employee_Management.service.DepartmentService;
 import com.nexdew.Employee_Management.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -59,7 +58,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setProjects(projectList);
         }
 
-        // SAVE
         return employeeRepository.save(employee);
     }
 
@@ -72,10 +70,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 
+
     @Override
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
+
     @Override
     public Employee updateEmployee(Long empId, Employee updatedEmployee) {
 
@@ -174,6 +174,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
         });
         return employeeRepository.save(existedEmployee);
+
     }
 
     //        Employee existedEmployee = employeeRepository

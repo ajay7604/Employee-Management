@@ -26,6 +26,7 @@ public class SalaryServiceImpl implements SalaryService {
 
      salary.setEmployee(employee);
      return salaryRepository.save(salary);
+
     }
 
     @Override
@@ -70,7 +71,6 @@ public class SalaryServiceImpl implements SalaryService {
         }
         employee.setSalary(null);
         employeeRepository.save(employee);
-
         salaryRepository.delete(salary);
         return true;
     }
